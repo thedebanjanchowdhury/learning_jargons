@@ -5,7 +5,11 @@ import GlassSurface from "../components/GlassSurface";
 import { Button } from "../components/ui/button";
 import FadeContent from "../components/FadeContent";
 
-const Home = () => {
+type HomeProps = {
+  onNext: () => void;
+};
+
+const Home = ({ onNext }: HomeProps) => {
   return (
     <div>
       {/* Background */}
@@ -42,10 +46,13 @@ const Home = () => {
             className=" mt-6 flex bg-red-600"
           >
             <div className="flex justify-between w-[85%]">
-              <h1 className="text-white text-2xl">Chatify</h1>
+              <h1 className="text-white text-2xl cursor-pointer">Chatify</h1>
 
-              <Button className="bg-white text-black hover:bg-black hover:text-white text-xl">
-                Get Started
+              <Button
+                className="bg-white text-black hover:bg-black hover:text-white text-md"
+                onClick={onNext}
+              >
+                Create a Room
               </Button>
             </div>
           </GlassSurface>
@@ -67,11 +74,7 @@ const Home = () => {
             textAlign="center"
           />
 
-          <FadeContent
-          blur={true}
-          initialOpacity={0}
-          duration={500}
-          >
+          <FadeContent blur={true} initialOpacity={0} duration={500}>
             <ShinyText
               className="font-[Neue-Montreal-Medium] mt-2 text-xl"
               text="A Real-Time Private Chat App with Private Rooms"
