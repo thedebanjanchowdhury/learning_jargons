@@ -1,4 +1,3 @@
-// import { Routes, Route } from "react-router-dom";
 import Chat from "./pages/Chat";
 import CreateRoom from "./pages/CreateRoom";
 import Home from "./pages/Home";
@@ -24,7 +23,7 @@ const App = () => {
           onBack={() => setPageType("home")}
         />
       )}
-      {pageType === "chat" && <Chat />}
+      {pageType === "chat" && <Chat onBack={() => setPageType("home")}/>}
     </div>
   );
 };

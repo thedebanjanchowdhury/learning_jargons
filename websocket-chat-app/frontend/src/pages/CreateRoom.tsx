@@ -11,12 +11,11 @@ type CreateRoomProps = {
   onBack: () => void;
 };
 
-// const [messages, setMessages] = useState(["Hola"]);
-
-const CreateRoom = ({ onBack }: CreateRoomProps) => {
+const CreateRoom = ({ onBack, onJoin }: CreateRoomProps) => {
   4;
   const [ws, setWs] = useState<WebSocket | null>(null);
   const [roomId, setRoomId] = useState("");
+  const [joinRoomId, setJoinRoomId] = useState("");
 
   useEffect(() => {
     const socket = new WebSocket("ws://localhost:8080");
@@ -29,6 +28,10 @@ const CreateRoom = ({ onBack }: CreateRoomProps) => {
       if (data.type === "roomCreated") {
         setRoomId(data.roomId);
       }
+
+      if (data.type === "joinedRoom") {
+        onJoin();
+      }
     };
 
     return () => socket.close();
@@ -39,7 +42,12 @@ const CreateRoom = ({ onBack }: CreateRoomProps) => {
   };
 
   const handleJoinRoom = () => {
-    ws?.send(JSON.stringify({ type: "joinRoom", roomId }));
+    if (!joinRoomId) {
+      toast("Enter Room Id First");
+      return;
+    }
+
+    ws?.send(JSON.stringify({ type: "joinRoom", roomId: joinRoomId }));
   };
 
   return (
@@ -101,7 +109,7 @@ const CreateRoom = ({ onBack }: CreateRoomProps) => {
               <p className="text-white text-xl mt-4 flex flex-col items-center">
                 Room Created: <br />
                 <span
-                  className="font-bold underline cursor-pointer"
+                  className="underline cursor-pointer text-lg"
                   onClick={() => {
                     navigator.clipboard.writeText(roomId);
                     toast("Copied to Clipboard");
@@ -124,6 +132,8 @@ const CreateRoom = ({ onBack }: CreateRoomProps) => {
               type="text"
               placeholder="Enter Room Code"
               className="w-[70%] mt-10 scale-120"
+              value={joinRoomId}
+              onChange={(e) => setJoinRoomId(e.target.value)}
             />
             <Button
               variant="outline"
