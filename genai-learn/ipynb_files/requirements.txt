@@ -1,0 +1,10 @@
+ipykernel
+dotenv
+langchain
+langchain-google-genai
+groq
+beautifulsoup4
+langchain_community
+langchain-ollama
+faiss-cpu
+langchain_groq
