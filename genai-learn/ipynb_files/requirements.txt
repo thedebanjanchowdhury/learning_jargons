@@ -8,3 +8,7 @@ langchain_community
 langchain-ollama
 faiss-cpu
 langchain_groq
+fastapi
+uvicorn
+langserve
+sse_starlette
